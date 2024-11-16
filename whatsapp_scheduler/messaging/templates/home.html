@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WhatsApp Scheduler</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        h1 {
+            color: #2c3e50;
+        }
+
+        h2 {
+            margin-top: 30px;
+            color: #34495e;
+        }
+
+        form {
+            margin-bottom: 20px;
+            padding: 20px;
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        form button {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        form button:hover {
+            background-color: #2ecc71;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #ffffff;
+        }
+
+        table th, table td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #2c3e50;
+            color: white;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        p {
+            font-size: 14px;
+        }
+
+        p.error {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>WhatsApp Scheduler</h1>
+
+    <!-- Display errors -->
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+
+    <!-- Form for scheduling messages -->
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Schedule Message</button>
+    </form>
+
+    <h2>Scheduled Messages</h2>
+    <table>
+        <tr>
+            <th>Phone</th>
+            <th>Send Time</th>
+            <th>Status</th>
+        </tr>
+        {% for msg in messages %}
+            <tr>
+                <td>{{ msg.phone }}</td>
+                <td>{{ msg.send_time }}</td>
+                <td>{{ msg.status }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
